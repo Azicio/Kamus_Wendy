@@ -5,21 +5,31 @@ import os
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Kamus Saku Pemasyarakatan", page_icon="⚖️")
 
+# --- CUSTOM THEME (background & heading colors) ---
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #f0f2f6; /* Light gray background */
+    }
+    h1 {
+        color: #1f4e79; /* Deep blue for the main title */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # --- DATA LOADING & SAVING ---
 def load_data():
-    # Look for the JSON file in the root folder (same directory as this script)
     path = "kamus_pemasyarakatan.json"
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
-    return {}  # Return empty dict if file not found
+    return {}
 
 def save_data(data):
     path = "kamus_pemasyarakatan.json"
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# Initialize the database so it's always defined
 db = load_data()
 
 # --- UI ---
@@ -29,7 +39,6 @@ st.info(
     "yang dibuat oleh Wendy Nahaklay selaku peserta magang di bidang Penerjemah."
 )
 
-# --- SAFETY CHECK ---
 if not db:
     st.error("⚠️ Database file (kamus_pemasyarakatan.json) not found in the root directory.")
 else:
@@ -40,7 +49,6 @@ else:
         found = False
         for category, terms in db.items():
             for item in terms:
-                # Unpack the three values: Indonesian, English, Definition
                 indo, eng, definition = item[0], item[1], item[2]
                 if search.lower() in indo.lower() or search.lower() in eng.lower():
                     st.info(f"**{indo}** = *{eng}*")
@@ -62,7 +70,7 @@ else:
                 st.caption(definition)
                 st.write("")
 
-    # --- ADD NEW TERM (Updated for 3 values) ---
+    # --- ADD NEW TERM ---
     with st.expander("➕ Add New Term to Dictionary"):
         with st.form("add_form"):
             new_cat = st.selectbox("Category", list(db.keys()))
