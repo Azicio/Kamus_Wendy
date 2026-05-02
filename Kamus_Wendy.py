@@ -9,17 +9,12 @@ st.info("Ini adalah edisi pertama Kamus Pemasyarakatan bahasa Indonesia - Inggri
 
 # --- DATA LOADING ---
 def load_data():
-    path = "data/kamus_pemasyarakatan.json"
+    # Remove "data/" so it looks in the root folder
+    path = "kamus_pemasyarakatan.json" 
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     return {}
-
-def save_data(data):
-    with open("data/kamus_pemasyarakatan.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
-
-db = load_data()
 
 # --- UI ---
 st.title("⚖️ Kamus Saku Pemasyarakatan")
