@@ -9,10 +9,10 @@ st.set_page_config(page_title="Kamus Saku Pemasyarakatan", page_icon="⚖️")
 st.markdown("""
     <style>
     .stApp {
-        background-color: #3483eb; /* Light gray background */
+        background-color: #4c72b0; /* Light gray background */
     }
     h1 {
-        color: #176d85; /* Deep blue for the main title */
+        color: #b9cef0; /* Deep blue for the main title */
     }
     </style>
     """, unsafe_allow_html=True)
